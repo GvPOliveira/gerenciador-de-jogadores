@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incluir Jogador</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="cabecalho">
+        <h1>Gerenciador de Jogadores de Futebol</h1>
+    </header>
+
+    <section class="formulario-container">
+
+        <h2>Incluir novo jogador</h2>
+
+        <form class="formulario-jogador" id="formInclusao">
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" min="2" required>
+            </div>
+
+            <div class="campo">
+                <label for="numeroCamisa">Número da camisa</label>
+                <input type="number" id="numeroCamisa" name="numeroCamisa"
+                       min="1" max="99" required>
+            </div>
+
+            <div class="campo">
+                <label for="time">Time</label>
+                <input type="text" id="time" name="time" min="2" required>
+            </div>
+
+            <div class="campo campo-lesionado">
+
+                <span>Lesionado</span>
+
+                <div class="opcoes-lesionado">
+
+                    <label>
+                        <input type="radio" name="lesionado"
+                               value="nao" checked>
+                        Não
+                    </label>
+
+                    <label>
+                        <input type="radio" name="lesionado"
+                               value="sim">
+                        Sim
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="campo campo-observacoes">
+                <label for="observacoes">Observações</label>
+                <textarea id="observacoes" name="observacoes"></textarea>
+            </div>
+
+            <div class="formulario-acoes">
+                <button type="submit" class="btn-salvar">
+                    Salvar
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+
+    <footer class="rodape">
+        <p>Gabriel Vinicius Pereira de Oliveira / Turma: A / Ano: 2026</p>
+        <p>Usou IA: SIM. Chat GTP, me auxiliando no desenvolvimento dos htmls e css apenas.</p>
+    </footer>
+
+</main>
+
+<script src="incluir.js"></script>
+</body>
+
+</html>

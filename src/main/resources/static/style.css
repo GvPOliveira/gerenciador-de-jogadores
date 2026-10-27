@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    padding: 30px 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border: 1px solid #333333;
+}
+
+.cabecalho {
+    text-align: center;
+    padding: 25px 15px 15px;
+}
+
+.cabecalho h1 {
+    font-size: 32px;
+    font-weight: normal;
+}
+
+.jogadores {
+    padding: 10px 35px 40px;
+}
+
+.jogadores h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.jogador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background-color: #ffffff;
+    border: 1px solid #23486b;
+    padding: 15px;
+    margin-bottom: 18px;
+}
+
+.informacoes h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.informacoes p {
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 140px;
+}
+
+button {
+    font-family: inherit;
+    font-size: 18px;
+    color: #ffffff;
+    border: 1px solid #23486b;
+    border-radius: 6px;
+    padding: 7px 15px;
+    cursor: pointer;
+}
+
+.btn-alterar {
+    background-color: #5b9bd5;
+}
+
+.btn-alterar:hover {
+    background-color: #367bb5;
+}
+
+.btn-excluir {
+    background-color: #c00000;
+}
+
+.btn-excluir:hover {
+    background-color: #900000;
+}
+
+.incluir {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.btn-incluir {
+    background-color: #5b9bd5;
+    padding: 10px 30px;
+    font-size: 22px;
+}
+
+.btn-incluir:hover {
+    background-color: #367bb5;
+}
+
+.rodape {
+    background-color: #888888;
+    color: #ffffff;
+    text-align: center;
+    padding: 18px 10px;
+    border-top: 1px solid #23486b;
+}
+
+.rodape p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+/* Área do formulário */
+
+.formulario-container {
+    background-color: #ffffff;
+    border: 1px solid #23486b;
+    margin: 0 35px 40px;
+    padding: 12px;
+}
+
+.formulario-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Formulário */
+
+.formulario-jogador {
+    padding: 0 15px;
+}
+
+.campo {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+}
+
+.campo > label,
+.campo > span {
+    font-size: 20px;
+}
+
+.campo input[type="text"],
+.campo input[type="number"] {
+    width: 100%;
+    height: 49px;
+    border: 2px solid #222222;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+}
+
+/* Opções de jogador lesionado */
+
+.campo-lesionado {
+    min-height: 45px;
+}
+
+.opcoes-lesionado {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+}
+
+.opcoes-lesionado label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.opcoes-lesionado input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    accent-color: #000000;
+    cursor: pointer;
+}
+
+/* Observações */
+
+.campo-observacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.campo-observacoes textarea {
+    width: 100%;
+    height: 125px;
+    resize: vertical;
+    border: 2px solid #222222;
+    border-radius: 22px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+/* Botão salvar */
+
+.formulario-acoes {
+    display: flex;
+    justify-content: center;
+    margin: 23px 0 15px;
+}
+
+.btn-salvar {
+    width: 255px;
+    min-height: 68px;
+    background-color: #5b9bd5;
+    font-size: 24px;
+}
+
+.btn-salvar:hover {
+    background-color: #367bb5;
+}
+
+/* Responsividade do formulário */
+
+@media (max-width: 600px) {
+
+    .formulario-container {
+        margin: 0 12px 25px;
+        padding: 12px;
+    }
+
+    .formulario-container h2 {
+        font-size: 21px;
+    }
+
+    .formulario-jogador {
+        padding: 0;
+    }
+
+    .campo {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .campo > label,
+    .campo > span {
+        font-size: 17px;
+    }
+
+    .opcoes-lesionado {
+        gap: 35px;
+    }
+
+    .opcoes-lesionado label {
+        font-size: 17px;
+    }
+
+    .campo-observacoes {
+        gap: 12px;
+    }
+
+    .btn-salvar {
+        width: 100%;
+        min-height: 55px;
+        font-size: 20px;
+    }
+}
+
+/* Ajustes para telas menores */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px 10px;
+    }
+
+    .cabecalho h1 {
+        font-size: 26px;
+    }
+
+    .jogadores {
+        padding: 15px;
+    }
+
+    .jogador {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .informacoes h3 {
+        font-size: 18px;
+    }
+
+    .informacoes p {
+        font-size: 15px;
+    }
+
+    .acoes {
+        min-width: 90px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 7px 10px;
+    }
+
+    .btn-incluir {
+        font-size: 17px;
+    }
+
+    .rodape p {
+        font-size: 14px;
+    }
+
+}

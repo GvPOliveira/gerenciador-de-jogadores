@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gerenciador de Futebol</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="cabecalho">
+        <h1>Gerenciador de Futebol</h1>
+    </header>
+
+    <section class="jogadores">
+
+        <h2>Jogadores cadastrados</h2>
+
+        <div class="jogador">
+
+            <div class="informacoes">
+                <h3>Vini Jr.</h3>
+                <p>Número da camisa: 7</p>
+                <p>Time: Real Madrid</p>
+            </div>
+
+            <div class="acoes">
+                <button class="btn-alterar">Alterar</button>
+                <button class="btn-excluir">Excluir</button>
+            </div>
+
+        </div>
+
+        <div class="jogador">
+
+            <div class="informacoes">
+                <h3>Neymar</h3>
+                <p>Número da camisa: 10</p>
+                <p>Time: Santos</p>
+            </div>
+
+            <div class="acoes">
+                <button class="btn-alterar">Alterar</button>
+                <button class="btn-excluir">Excluir</button>
+            </div>
+
+        </div>
+
+        <div class="incluir">
+            <button class="btn-incluir" id="incluir">Incluir novo jogador</button>
+        </div>
+
+    </section>
+
+    <footer class="rodape">
+        <p>Gabriel Vinicius Pereira de Oliveira / Turma: A / Ano: 2026</p>
+        <p>Usou IA: SIM. Chat GTP, me auxiliando no desenvolvimento dos htmls e css apenas.</p>
+    </footer>
+
+</main>
+
+<script>
+    const btnIncluir = document.getElementById("incluir");
+    btnIncluir.addEventListener("click",redirecionar);
+
+    function redirecionar(){
+        window.location.href = 'incluir.html';
+    }
+
+</script>
+</body>
+
+</html>
