@@ -5,13 +5,11 @@ import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Jogador;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.JogadorService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/jogadores")
@@ -23,6 +21,13 @@ public class JogadorController {
     public JogadorController(JogadorService jogadorService) {
         this.jogadorService = jogadorService;
     }
+
+    @GetMapping
+    public List<JogadorDTO> getJogadores(){
+        return jogadorService.getAll();
+    }
+
+
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Jogador jogador) {

@@ -22,40 +22,20 @@
 
         <h2>Jogadores cadastrados</h2>
 
-        <div class="jogador">
-
-            <div class="informacoes">
-                <h3>Vini Jr.</h3>
-                <p>Número da camisa: 7</p>
-                <p>Time: Real Madrid</p>
+        <div id="listaJogadores"></div>
+        <div class="botoes-principais">
+            <div class="incluir">
+                <button class="btn-incluir" id="incluir">
+                    Incluir novo jogador
+                </button>
             </div>
 
-            <div class="acoes">
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
+            <div class="cadastrarTime">
+                <button class="btn-cadastrarTime" id="cadastrarTime">
+                    Cadastrar Time
+                </button>
             </div>
-
         </div>
-
-        <div class="jogador">
-
-            <div class="informacoes">
-                <h3>Neymar</h3>
-                <p>Número da camisa: 10</p>
-                <p>Time: Santos</p>
-            </div>
-
-            <div class="acoes">
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
-            </div>
-
-        </div>
-
-        <div class="incluir">
-            <button class="btn-incluir" id="incluir">Incluir novo jogador</button>
-        </div>
-
     </section>
 
     <footer class="rodape">
@@ -66,12 +46,63 @@
 </main>
 
 <script>
+    listar();
     const btnIncluir = document.getElementById("incluir");
-    btnIncluir.addEventListener("click",redirecionar);
+    btnIncluir.addEventListener("click", redirecionar);
 
-    function redirecionar(){
+    function redirecionar() {
         window.location.href = 'incluir.html';
     }
+
+    async function listar() {
+
+
+        const response = await fetch('/jogadores');
+
+        if (!response.ok) {
+            alert("Error, Status: " + response.status);
+        } else {
+            const listaJogadores = document.getElementById("listaJogadores");
+            listaJogadores.textContent = "";
+            const jogadores = await response.json();
+            for (const j of jogadores) {
+                const divJogador = document.createElement("div");
+                divJogador.classList.add("jogador");
+                const divInfo = document.createElement("div");
+                divInfo.classList.add("informacoes");
+                divJogador.append(divInfo);
+                const nome = document.createElement("h3");
+                const pCamisa = document.createElement("p");
+                const pTime = document.createElement("p");
+                if (j.lesionado === true) {
+                    const lesionado = document.createElement("p");
+                    lesionado.textContent = "LESIONADO";
+                    lesionado.classList.add("lesionado");
+                    divInfo.append(lesionado);
+                }
+                nome.textContent = j.nome;
+                divInfo.append(nome);
+                pCamisa.textContent = j.numeroCamisa;
+                divInfo.append(pCamisa);
+                pTime.textContent = j.time;
+                divInfo.append(pTime);
+
+                const divAcoes = document.createElement("div");
+                divAcoes.classList.add("acoes");
+                divJogador.append(divAcoes);
+                const btnAlterar = document.createElement("button");
+                btnAlterar.textContent = "Alterar";
+                btnAlterar.classList.add("btn-alterar");
+                divAcoes.append(btnAlterar);
+                const btnExcluir = document.createElement("button");
+                btnExcluir.textContent = "Excluir";
+                btnExcluir.classList.add("btn-excluir");
+                divAcoes.append(btnExcluir);
+                listaJogadores.append(divJogador);
+            }
+        }
+    }
+
 
 </script>
 </body>

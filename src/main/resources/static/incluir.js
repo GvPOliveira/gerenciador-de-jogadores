@@ -21,10 +21,9 @@ formulario.addEventListener("submit", async function (evt) {
         }
     );
     if (!response.ok) {
-    alert("Não foi possivel cadastrar esse jogador, Status: " + response.status);
+        alert("Não foi possivel cadastrar esse jogador, Status: " + response.status);
     } else {
         alert("Jogador cadastrado com sucesso!");
         window.location.href = "index.html";
     }
-
 })

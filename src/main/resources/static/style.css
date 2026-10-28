@@ -90,20 +90,30 @@ button {
 .btn-excluir:hover {
     background-color: #900000;
 }
-
-.incluir {
+.botoes-principais {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 20px;
     margin-top: 25px;
 }
 
-.btn-incluir {
+.incluir,
+.cadastrarTime {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.btn-incluir,
+.btn-cadastrarTime {
     background-color: #5b9bd5;
     padding: 10px 30px;
     font-size: 22px;
 }
 
-.btn-incluir:hover {
+.btn-incluir:hover,
+.btn-cadastrarTime:hover {
     background-color: #367bb5;
 }
 
@@ -275,6 +285,18 @@ button {
         font-size: 20px;
     }
 }
+/* Lesionado */
+   .lesionado {
+       display: inline-block;
+       background-color: #f5822a;
+       color: white;
+       border: 1px solid #a94b12;
+       padding: 4px 12px;
+       text-align: center;
+       font-size: 14px;
+       width: auto;
+       margin: 0 0 5px 0;
+   }
 
 /* Ajustes para telas menores */
 
