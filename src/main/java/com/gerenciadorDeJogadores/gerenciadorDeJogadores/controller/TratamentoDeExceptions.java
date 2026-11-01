@@ -1,6 +1,7 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.controller;
 
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.JogadorNotFound;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.TimeNotFound;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
-public class TratamentoDeExcessoes {
+public class TratamentoDeExceptions {
 
     @ExceptionHandler(JogadorNotFound.class)
     public ResponseEntity<ProblemDetail> JogadorNotFoundException(JogadorNotFound jogadorNotFound) {
@@ -23,7 +24,13 @@ public class TratamentoDeExcessoes {
         return ResponseEntity.of(pb).build();
 
     }
+    @ExceptionHandler(TimeNotFound.class)
+    public ResponseEntity<ProblemDetail> timeNotFound(TimeNotFound timeNotFound) {
+        ProblemDetail pb = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404),
+                timeNotFound.getMessage());
+        return ResponseEntity.of(pb).build();
 
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> errorValid(MethodArgumentNotValidException errorValid){
         List<FieldError> erro = errorValid.getFieldErrors();

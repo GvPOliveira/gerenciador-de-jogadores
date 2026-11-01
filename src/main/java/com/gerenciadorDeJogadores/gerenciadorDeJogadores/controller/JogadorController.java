@@ -58,8 +58,8 @@ public class JogadorController {
         JogadorDTO jogadorDTO = jogadorService.save(jogador);
         URI location = ServletUriComponentsBuilder.
                 fromCurrentContextPath().
-                path("/jogadores/{nome}").
-                buildAndExpand(jogadorDTO.getNome()).
+                path("/jogadores/{id}").
+                buildAndExpand(jogadorDTO.getId()).
                 toUri();
         return ResponseEntity.created(location).build();
     }
