@@ -8,6 +8,8 @@ import java.util.List;
 public interface JogadorService {
     public JogadorDTO save(Jogador jogador);
     public List<JogadorDTO> getAll();
-
+    public Jogador get(Long id);
+    public JogadorDTO put(Long id, Jogador jogador);
+    public void delete(Long id);
 
 }

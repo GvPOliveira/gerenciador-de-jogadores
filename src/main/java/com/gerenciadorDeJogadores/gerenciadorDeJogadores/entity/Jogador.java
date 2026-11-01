@@ -11,19 +11,22 @@ public class Jogador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O nome do jogador é obrigatório.")
+    @Size(min = 2, message = "O nome do jogador deve ter no mínimo 2 caracteres.")
     @Column(nullable = false)
     private String nome;
 
-    @NotBlank @Size(min = 1) @Size( max = 99)
+    @NotNull(message = "O número da camisa é obrigatório.")
+    @Min(value = 1, message = "O número da camisa deve ser no mínimo 1.")
+    @Max(value = 99, message = "O número da camisa deve ser no máximo 99.")
     @Column(nullable = false)
-    private String numeroCamisa;
+    private Integer numeroCamisa;
 
-    @NotBlank @Size(min = 2)
-    @Column(nullable = false)
-    private String time;
 
-    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Time time;
+
     @Column(nullable = false)
     private boolean lesionado;
 
@@ -49,19 +52,19 @@ public class Jogador {
         this.nome = nome;
     }
 
-    public String getNumeroCamisa() {
+    public Integer getNumeroCamisa() {
         return numeroCamisa;
     }
 
-    public void setNumeroCamisa(String numeroCamisa) {
+    public void setNumeroCamisa(Integer numeroCamisa) {
         this.numeroCamisa = numeroCamisa;
     }
 
-    public String getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 

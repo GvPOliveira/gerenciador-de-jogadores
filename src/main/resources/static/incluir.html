@@ -26,18 +26,23 @@
 
             <div class="campo">
                 <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" min="2" required>
+                <input type="text" id="nome" name="nome" required>
+                <span class="erro" id="erroNome"></span>
             </div>
 
             <div class="campo">
                 <label for="numeroCamisa">Número da camisa</label>
                 <input type="number" id="numeroCamisa" name="numeroCamisa"
                        min="1" max="99" required>
+                <span class="erro" id="erroNumeroCamisa"></span>
             </div>
 
             <div class="campo">
-                <label for="time">Time</label>
-                <input type="text" id="time" name="time" min="2" required>
+                <label for="times">Time</label>
+                <select id="times" name="time" required>
+                    <option value="">Selecione um time</option>
+                </select>
+                <span class="erro" id="erroTime"></span>
             </div>
 
             <div class="campo campo-lesionado">
@@ -59,12 +64,14 @@
                     </label>
 
                 </div>
+                <span class="erro" id="erroLesionado"></span>
 
             </div>
 
             <div class="campo campo-observacoes">
                 <label for="observacoes">Observações</label>
                 <textarea id="observacoes" name="observacoes"></textarea>
+                <span class="erro" id="erroObservacoes"></span>
             </div>
 
             <div class="formulario-acoes">

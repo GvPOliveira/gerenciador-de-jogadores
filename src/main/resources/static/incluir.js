@@ -1,12 +1,14 @@
 const formulario = document.getElementById("formInclusao");
-
+getTimes();
 formulario.addEventListener("submit", async function (evt) {
     evt.preventDefault();
     const dados = new FormData(formulario);
     const jogador = {
         nome: dados.get("nome"),
-        numeroCamisa: dados.get("numeroCamisa"),
-        time: dados.get("time"),
+        numeroCamisa: Number(dados.get("numeroCamisa")),
+        time: {
+            id: Number(dados.get("time"))
+        },
         lesionado: dados.get("lesionado") === "sim",
         descricao: dados.get("observacoes")
     }
@@ -20,10 +22,48 @@ formulario.addEventListener("submit", async function (evt) {
             }
         }
     );
-    if (!response.ok) {
+    if (response.status === 400) {
+        const erros = await response.json();
+        const erroNome = document.getElementById("erroNome");
+        const erroCamisa = document.getElementById("erroNumeroCamisa");
+        const erroLesionado = document.getElementById("erroLesionado");
+        erroNome.innerText = "";
+        erroCamisa.innerText = "";
+        erroLesionado.innerText = "";
+        for (const [chave, valor] of Object.entries(erros)) {
+            if (chave === "nome") {
+                erroNome.innerText = valor;
+            } else if (chave === "numeroCamisa") {
+                erroCamisa.innerText = valor;
+            } else if (chave === "lesionado") {
+                erroLesionado.innerText = valor;
+            }
+        }
+
+    } else if (!response.ok) {
         alert("Não foi possivel cadastrar esse jogador, Status: " + response.status);
     } else {
         alert("Jogador cadastrado com sucesso!");
         window.location.href = "index.html";
     }
 })
+
+// Função para buscar times e sobrescrever o select de times
+
+async function getTimes() {
+    const response = await fetch("/times");
+    if (!response.ok) {
+        alert("Não foi possivel carregar os times, Status: " + response.status);
+    } else {
+        const times = await response.json();
+        if (times.length > 0) {
+            for (const time of times) {
+                const timesList = document.getElementById("times");
+                const opt = document.createElement("option");
+                opt.value = time.id;
+                opt.textContent = time.nome;
+                timesList.append(opt);
+            }
+        }
+    }
+}

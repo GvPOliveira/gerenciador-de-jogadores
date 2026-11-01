@@ -3,25 +3,37 @@ package com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto;
 
 public class JogadorDTO {
 
+    private Long id;
+
     private String nome;
 
-    private String numeroCamisa;
+    private Integer numeroCamisa;
 
-    private String time;
+    private TimeDTO time;
 
     private boolean lesionado;
 
     private String descricao;
 
 
-    public JogadorDTO(){}
+    public JogadorDTO() {
+    }
 
-    public JogadorDTO(String nome, String numeroCamisa, String time, boolean lesionado, String descricao) {
+    public JogadorDTO(Long id, String nome, Integer numeroCamisa, TimeDTO time, boolean lesionado, String descricao) {
+        this.id = id;
         this.nome = nome;
         this.numeroCamisa = numeroCamisa;
         this.time = time;
         this.lesionado = lesionado;
         this.descricao = descricao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -32,19 +44,19 @@ public class JogadorDTO {
         this.nome = nome;
     }
 
-    public String getNumeroCamisa() {
+    public Integer getNumeroCamisa() {
         return numeroCamisa;
     }
 
-    public void setNumeroCamisa(String numeroCamisa) {
+    public void setNumeroCamisa(Integer numeroCamisa) {
         this.numeroCamisa = numeroCamisa;
     }
 
-    public String getTime() {
+    public TimeDTO getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(TimeDTO time) {
         this.time = time;
     }
 
