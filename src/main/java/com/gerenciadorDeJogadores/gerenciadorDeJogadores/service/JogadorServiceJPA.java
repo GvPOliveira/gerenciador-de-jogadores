@@ -22,11 +22,8 @@ public class JogadorServiceJPA implements JogadorService {
 
 
     public JogadorDTO save(Jogador jogador) {
-        jogadorRepository.save(jogador);
-        TimeDTO timeDTO = new TimeDTO(jogador.getTime().getId(), jogador.getTime().getNome());
-
-        return new JogadorDTO(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
-                timeDTO, jogador.isLesionado(), jogador.getDescricao());
+        Jogador jogadorSalvado = jogadorRepository.save(jogador);
+        return toDto(jogadorSalvado);
     }
 
     public Jogador get(Long id) {
@@ -50,18 +47,13 @@ public class JogadorServiceJPA implements JogadorService {
             jogador.setDescricao(jogadorAlterado.getDescricao());
             jogador.setNumeroCamisa(jogadorAlterado.getNumeroCamisa());
             Jogador jogadorSalvado = jogadorRepository.save(jogador);
-
-            return new JogadorDTO(jogadorSalvado.getId(),
-                    jogadorSalvado.getNome(), jogadorSalvado.getNumeroCamisa(),
-                    new TimeDTO(jogadorSalvado.getTime().getId(),
-                    jogadorSalvado.getTime().getNome()),
-                    jogadorSalvado.isLesionado(), jogadorSalvado.getDescricao());
+            return toDto(jogadorSalvado);
         }
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         Optional<Jogador> jogador = jogadorRepository.findById(id);
-        if(jogador.isEmpty()){
+        if (jogador.isEmpty()) {
             throw new JogadorNotFound("Jogador não encontrado.");
         }
         jogadorRepository.delete(jogador.get());
@@ -69,9 +61,14 @@ public class JogadorServiceJPA implements JogadorService {
 
 
     public List<JogadorDTO> getAll() {
-        return jogadorRepository.findAll().stream().map(jogador -> new JogadorDTO(jogador.getId(), jogador.getNome(),
-                jogador.getNumeroCamisa(), new TimeDTO(jogador.getTime().getId(), jogador.getTime().getNome()),
-                jogador.isLesionado(), jogador.getDescricao())).toList();
+        return jogadorRepository.findAll().stream().map(this::toDto).toList();
+    }
+
+
+    private JogadorDTO toDto(Jogador jogador) {
+        return new JogadorDTO(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
+                new TimeDTO(jogador.getTime().getId(), jogador.getTime().getNome()),
+                jogador.isLesionado(), jogador.getDescricao());
     }
 
 }
