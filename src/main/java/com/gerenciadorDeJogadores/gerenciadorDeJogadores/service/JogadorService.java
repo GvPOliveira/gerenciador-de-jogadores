@@ -1,17 +1,20 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.service;
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorRespostaDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorEntradaDto;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Jogador;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorRespostaDto;
 
 import java.util.List;
 
 public interface JogadorService {
-    public JogadorRespostaDto save(JogadorEntradaDto jogadorEntradaDto);
-    public List<JogadorRespostaDto> getAll();
-    public Jogador get(Long id);
-    public JogadorRespostaDto put(Long id, JogadorEntradaDto jogadorEntradaDto);
-    public void delete(Long id);
+    JogadorRespostaDto salvar(JogadorEntradaDto jogadorEntradaDto);
+
+    List<JogadorRespostaDto> buscarTodos();
+
+    JogadorRespostaDto buscarPorId(Long id);
+
+    JogadorRespostaDto alterar(Long id, JogadorEntradaDto jogadorEntradaDto);
+
+    void excluir(Long id);
 
 
 }

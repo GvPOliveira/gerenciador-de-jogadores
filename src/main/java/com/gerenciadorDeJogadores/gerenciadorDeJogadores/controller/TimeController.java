@@ -26,13 +26,13 @@ public class TimeController {
     }
 
     @GetMapping
-    public List<TimeDto> getAll() {
-        return timeServiceJPA.getAll();
+    public List<TimeDto> buscarTodos() {
+        return timeServiceJPA.buscarTodos();
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody Time time) {
-        TimeDto timeDto = timeServiceJPA.save(time);
+    public ResponseEntity<?> salvar(@Valid @RequestBody Time time) {
+        TimeDto timeDto = timeServiceJPA.salvar(time);
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/times/{nome}").buildAndExpand(timeDto.getNome())

@@ -9,6 +9,7 @@ import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.JogadorNotFou
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.repository.JogadorRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,34 +25,36 @@ public class JogadorServiceJPA implements JogadorService {
         this.timeService = timeService;
     }
 
-
-    public JogadorRespostaDto save(JogadorEntradaDto jogadorEntradaDto) {
+    @Transactional
+    public JogadorRespostaDto salvar(JogadorEntradaDto jogadorEntradaDto) {
         Jogador jogador = toEntity(jogadorEntradaDto);
         Jogador jogadorSalvado = jogadorRepository.save(jogador);
         return toDto(jogadorSalvado);
     }
 
-    public Jogador get(Long id) {
+    @Transactional(readOnly = true)
+    public JogadorRespostaDto buscarPorId(Long id) {
         Optional<Jogador> optJogador = jogadorRepository.findById(id);
         if (optJogador.isEmpty()) {
             throw new JogadorNotFound("Jogador não encontrado.");
         } else {
-            return optJogador.get();
+            return toDto(optJogador.get());
         }
     }
 
-    public JogadorRespostaDto put(Long id, JogadorEntradaDto jogadorAlterado) {
+    @Transactional
+    public JogadorRespostaDto alterar(Long id, JogadorEntradaDto jogadorAlterado) {
         Optional<Jogador> optJogador = jogadorRepository.findById(id);
         if (optJogador.isEmpty()) {
             throw new JogadorNotFound("Jogador não encontrado.");
         } else {
-            Jogador jogador = putDtoIntoToEntity(optJogador.get(), jogadorAlterado);
+            Jogador jogador = atualizarDados(optJogador.get(), jogadorAlterado);
             Jogador jogadorSalvado = jogadorRepository.save(jogador);
             return toDto(jogadorSalvado);
         }
     }
-
-    public void delete(Long id) {
+    @Transactional
+    public void excluir(Long id) {
         Optional<Jogador> jogador = jogadorRepository.findById(id);
         if (jogador.isEmpty()) {
             throw new JogadorNotFound("Jogador não encontrado.");
@@ -59,8 +62,8 @@ public class JogadorServiceJPA implements JogadorService {
         jogadorRepository.delete(jogador.get());
     }
 
-
-    public List<JogadorRespostaDto> getAll() {
+    @Transactional(readOnly = true)
+    public List<JogadorRespostaDto> buscarTodos() {
         return jogadorRepository.findAll().stream().map(this::toDto).toList();
     }
 
@@ -72,14 +75,14 @@ public class JogadorServiceJPA implements JogadorService {
     }
 
     private Jogador toEntity(JogadorEntradaDto jogadorEntradaDto) {
-        Time time = timeService.getTime(jogadorEntradaDto.getIdTime());
+        Time time = timeService.buscarPorId(jogadorEntradaDto.getIdTime());
         return new Jogador(jogadorEntradaDto.getNome(), jogadorEntradaDto.getNumeroCamisa(),
                 time, jogadorEntradaDto.isLesionado(), jogadorEntradaDto.getDescricao());
     }
 
 
-    private Jogador putDtoIntoToEntity(Jogador jogadorBanco, JogadorEntradaDto jogadorEntrada) {
-        Time time = timeService.getTime(jogadorEntrada.getIdTime());
+    private Jogador atualizarDados(Jogador jogadorBanco, JogadorEntradaDto jogadorEntrada) {
+        Time time = timeService.buscarPorId(jogadorEntrada.getIdTime());
         jogadorBanco.setTime(time);
         jogadorBanco.setLesionado(jogadorEntrada.isLesionado());
         jogadorBanco.setNome(jogadorEntrada.getNome());

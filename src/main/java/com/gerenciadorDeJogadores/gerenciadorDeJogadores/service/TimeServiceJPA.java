@@ -5,6 +5,7 @@ import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.TimeNotFound;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.repository.TimeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +19,14 @@ public class TimeServiceJPA implements TimeService {
         this.timeRepository = timeRepository;
     }
 
-    public TimeDto save(Time time) {
+    @Transactional
+    public TimeDto salvar(Time time) {
         Time timeSalvado = timeRepository.save(time);
         return new TimeDto(timeSalvado.getId(), timeSalvado.getNome());
     }
 
-    public Time getTime(Long id) {
+    @Transactional(readOnly = true)
+    public Time buscarPorId(Long id) {
         Optional<Time> time = timeRepository.findById(id);
         if (time.isEmpty()) {
             throw new TimeNotFound("Esse time não foi encontrado.");
@@ -32,7 +35,8 @@ public class TimeServiceJPA implements TimeService {
         }
     }
 
-    public List<TimeDto> getAll() {
+    @Transactional(readOnly = true)
+    public List<TimeDto> buscarTodos() {
         return timeRepository.findAll().stream().map(time -> new TimeDto(time.getId(),time.getNome())).toList();
     }
 
