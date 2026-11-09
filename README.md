@@ -78,17 +78,19 @@ Para acessar o console do H2, use a JDBC URL `jdbc:h2:mem:testdb`, o usuário `s
 
 ## Exemplo de uso
 
-**Cadastrar um jogador:** `POST /jogadores`
+**Cadastrar um jogador:** `POST /jogadores` (o `PUT /jogadores/{id}` usa o mesmo corpo)
 
 ```json
 {
   "nome": "Carlos Silva",
   "numeroCamisa": 10,
-  "time": { "id": 1 },
+  "idTime": 1,
   "lesionado": false,
   "descricao": "Meia de criação"
 }
 ```
+
+O `id` do jogador não é enviado no corpo: ele é gerado no cadastro e, na alteração, vem pela URL. Se `lesionado` não for enviado, vale `false`.
 
 **Resposta de `GET /jogadores/1`:**
 

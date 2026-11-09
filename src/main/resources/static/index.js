@@ -178,9 +178,7 @@ formulario.addEventListener("submit", async function (evt) {
     const jogador = {
         nome: dados.get("nome"),
         numeroCamisa: Number(dados.get("numeroCamisa")),
-        time: {
-            id: Number(dados.get("time"))
-        },
+        idTime: Number(dados.get("time")),
         lesionado: dados.get("lesionado") === "true",
         descricao: dados.get("descricao")
     }

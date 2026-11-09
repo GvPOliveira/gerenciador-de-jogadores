@@ -1,6 +1,6 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.service;
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDTO;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.TimeNotFound;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.repository.TimeRepository;
@@ -18,9 +18,9 @@ public class TimeServiceJPA implements TimeService {
         this.timeRepository = timeRepository;
     }
 
-    public TimeDTO save(Time time) {
+    public TimeDto save(Time time) {
         Time timeSalvado = timeRepository.save(time);
-        return new TimeDTO(timeSalvado.getId(), timeSalvado.getNome());
+        return new TimeDto(timeSalvado.getId(), timeSalvado.getNome());
     }
 
     public Time getTime(Long id) {
@@ -32,8 +32,8 @@ public class TimeServiceJPA implements TimeService {
         }
     }
 
-    public List<TimeDTO> getAll() {
-        return timeRepository.findAll().stream().map(time -> new TimeDTO(time.getId(),time.getNome())).toList();
+    public List<TimeDto> getAll() {
+        return timeRepository.findAll().stream().map(time -> new TimeDto(time.getId(),time.getNome())).toList();
     }
 
 }

@@ -1,8 +1,10 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.service;
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorDTO;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDTO;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorEntradaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorRespostaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Jogador;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.JogadorNotFound;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.repository.JogadorRepository;
 import org.springframework.context.annotation.Primary;
@@ -15,13 +17,16 @@ import java.util.Optional;
 @Primary
 public class JogadorServiceJPA implements JogadorService {
     private final JogadorRepository jogadorRepository;
+    private final TimeService timeService;
 
-    public JogadorServiceJPA(JogadorRepository jogadorRepository) {
+    public JogadorServiceJPA(JogadorRepository jogadorRepository, TimeService timeService) {
         this.jogadorRepository = jogadorRepository;
+        this.timeService = timeService;
     }
 
 
-    public JogadorDTO save(Jogador jogador) {
+    public JogadorRespostaDto save(JogadorEntradaDto jogadorEntradaDto) {
+        Jogador jogador = toEntity(jogadorEntradaDto);
         Jogador jogadorSalvado = jogadorRepository.save(jogador);
         return toDto(jogadorSalvado);
     }
@@ -35,17 +40,12 @@ public class JogadorServiceJPA implements JogadorService {
         }
     }
 
-    public JogadorDTO put(Long id, Jogador jogadorAlterado) {
+    public JogadorRespostaDto put(Long id, JogadorEntradaDto jogadorAlterado) {
         Optional<Jogador> optJogador = jogadorRepository.findById(id);
         if (optJogador.isEmpty()) {
             throw new JogadorNotFound("Jogador não encontrado.");
         } else {
-            Jogador jogador = optJogador.get();
-            jogador.setTime(jogadorAlterado.getTime());
-            jogador.setLesionado(jogadorAlterado.isLesionado());
-            jogador.setNome(jogadorAlterado.getNome());
-            jogador.setDescricao(jogadorAlterado.getDescricao());
-            jogador.setNumeroCamisa(jogadorAlterado.getNumeroCamisa());
+            Jogador jogador = putDtoIntoToEntity(optJogador.get(), jogadorAlterado);
             Jogador jogadorSalvado = jogadorRepository.save(jogador);
             return toDto(jogadorSalvado);
         }
@@ -60,15 +60,32 @@ public class JogadorServiceJPA implements JogadorService {
     }
 
 
-    public List<JogadorDTO> getAll() {
+    public List<JogadorRespostaDto> getAll() {
         return jogadorRepository.findAll().stream().map(this::toDto).toList();
     }
 
 
-    private JogadorDTO toDto(Jogador jogador) {
-        return new JogadorDTO(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
-                new TimeDTO(jogador.getTime().getId(), jogador.getTime().getNome()),
+    private JogadorRespostaDto toDto(Jogador jogador) {
+        return new JogadorRespostaDto(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
+                new TimeDto(jogador.getTime().getId(), jogador.getTime().getNome()),
                 jogador.isLesionado(), jogador.getDescricao());
+    }
+
+    private Jogador toEntity(JogadorEntradaDto jogadorEntradaDto) {
+        Time time = timeService.getTime(jogadorEntradaDto.getIdTime());
+        return new Jogador(jogadorEntradaDto.getNome(), jogadorEntradaDto.getNumeroCamisa(),
+                time, jogadorEntradaDto.isLesionado(), jogadorEntradaDto.getDescricao());
+    }
+
+
+    private Jogador putDtoIntoToEntity(Jogador jogadorBanco, JogadorEntradaDto jogadorEntrada) {
+        Time time = timeService.getTime(jogadorEntrada.getIdTime());
+        jogadorBanco.setTime(time);
+        jogadorBanco.setLesionado(jogadorEntrada.isLesionado());
+        jogadorBanco.setNome(jogadorEntrada.getNome());
+        jogadorBanco.setDescricao(jogadorEntrada.getDescricao());
+        jogadorBanco.setNumeroCamisa(jogadorEntrada.getNumeroCamisa());
+        return jogadorBanco;
     }
 
 }

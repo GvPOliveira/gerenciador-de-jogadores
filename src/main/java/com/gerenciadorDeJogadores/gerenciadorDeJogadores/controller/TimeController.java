@@ -1,7 +1,7 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.controller;
 
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDTO;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.TimeServiceJPA;
 import jakarta.validation.Valid;
@@ -26,16 +26,16 @@ public class TimeController {
     }
 
     @GetMapping
-    public List<TimeDTO> getAll() {
+    public List<TimeDto> getAll() {
         return timeServiceJPA.getAll();
     }
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Time time) {
-        TimeDTO timeDTO = timeServiceJPA.save(time);
+        TimeDto timeDto = timeServiceJPA.save(time);
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/times/{nome}").buildAndExpand(timeDTO.getNome())
+                .path("/times/{nome}").buildAndExpand(timeDto.getNome())
                 .toUri();
         return ResponseEntity.created(location).build();
 

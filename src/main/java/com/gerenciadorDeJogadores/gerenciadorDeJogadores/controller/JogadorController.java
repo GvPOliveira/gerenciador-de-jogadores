@@ -1,13 +1,11 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.controller;
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorDTO;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDTO;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorRespostaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorEntradaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Jogador;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.JogadorService;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.TimeService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,43 +21,37 @@ public class JogadorController {
 
 
     private final JogadorService jogadorService;
-    private final TimeService timeService;
 
-    public JogadorController(JogadorService jogadorService, TimeService timeService) {
+    public JogadorController(JogadorService jogadorService) {
         this.jogadorService = jogadorService;
-        this.timeService = timeService;
     }
 
     @GetMapping
-    public List<JogadorDTO> getJogadores() {
+    public List<JogadorRespostaDto> getJogadores() {
         return jogadorService.getAll();
     }
 
     @GetMapping("/{id}")
-    public JogadorDTO getJogador(@PathVariable Long id) {
+    public JogadorRespostaDto getJogador(@PathVariable Long id) {
         Jogador jogador = jogadorService.get(id);
-        return new JogadorDTO(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
-                new TimeDTO(jogador.getTime().getId(), jogador.getTime().getNome()),
+        return new JogadorRespostaDto(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
+                new TimeDto(jogador.getTime().getId(), jogador.getTime().getNome()),
                 jogador.isLesionado(), jogador.getDescricao());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JogadorDTO> alterarJogador(@PathVariable Long id,@Valid @RequestBody Jogador jogador) {
-        Time time = timeService.getTime(jogador.getTime().getId());
-        jogador.setTime(time);
-        JogadorDTO jogadorAlterado = jogadorService.put(id, jogador);
+    public ResponseEntity<JogadorRespostaDto> alterarJogador(@PathVariable Long id, @Valid @RequestBody JogadorEntradaDto jogadorEntradaDto) {
+        JogadorRespostaDto jogadorAlterado = jogadorService.put(id, jogadorEntradaDto);
         return ResponseEntity.ok(jogadorAlterado);  }
 
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody Jogador jogador) {
-        Time time = timeService.getTime(jogador.getTime().getId());
-        jogador.setTime(time);
-        JogadorDTO jogadorDTO = jogadorService.save(jogador);
+    public ResponseEntity<?> save(@Valid @RequestBody JogadorEntradaDto jogadorEntradaDto) {
+        JogadorRespostaDto jogadorRespostaDto = jogadorService.save(jogadorEntradaDto);
         URI location = ServletUriComponentsBuilder.
                 fromCurrentContextPath().
                 path("/jogadores/{id}").
-                buildAndExpand(jogadorDTO.getId()).
+                buildAndExpand(jogadorRespostaDto.getId()).
                 toUri();
         return ResponseEntity.created(location).build();
     }

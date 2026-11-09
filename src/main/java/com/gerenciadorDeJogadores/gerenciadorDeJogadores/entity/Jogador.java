@@ -1,7 +1,6 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "jogadores")
@@ -11,14 +10,9 @@ public class Jogador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome do jogador é obrigatório.")
-    @Size(min = 2, message = "O nome do jogador deve ter no mínimo 2 caracteres.")
     @Column(nullable = false)
     private String nome;
 
-    @NotNull(message = "O número da camisa é obrigatório.")
-    @Min(value = 1, message = "O número da camisa deve ser no mínimo 1.")
-    @Max(value = 99, message = "O número da camisa deve ser no máximo 99.")
     @Column(nullable = false)
     private Integer numeroCamisa;
 
@@ -35,6 +29,14 @@ public class Jogador {
 
 
     public Jogador(){}
+
+    public Jogador(String nome, Integer numeroCamisa, Time time, boolean lesionado, String descricao) {
+        this.nome = nome;
+        this.numeroCamisa = numeroCamisa;
+        this.time = time;
+        this.lesionado = lesionado;
+        this.descricao = descricao;
+    }
 
     public Long getId() {
         return id;

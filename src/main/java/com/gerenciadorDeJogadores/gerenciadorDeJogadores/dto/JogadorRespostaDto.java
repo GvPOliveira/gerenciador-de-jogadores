@@ -1,7 +1,7 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto;
 
 
-public class JogadorDTO {
+public class JogadorRespostaDto {
 
     private Long id;
 
@@ -9,17 +9,17 @@ public class JogadorDTO {
 
     private Integer numeroCamisa;
 
-    private TimeDTO time;
+    private TimeDto time;
 
     private boolean lesionado;
 
     private String descricao;
 
 
-    public JogadorDTO() {
+    public JogadorRespostaDto() {
     }
 
-    public JogadorDTO(Long id, String nome, Integer numeroCamisa, TimeDTO time, boolean lesionado, String descricao) {
+    public JogadorRespostaDto(Long id, String nome, Integer numeroCamisa, TimeDto time, boolean lesionado, String descricao) {
         this.id = id;
         this.nome = nome;
         this.numeroCamisa = numeroCamisa;
@@ -52,11 +52,11 @@ public class JogadorDTO {
         this.numeroCamisa = numeroCamisa;
     }
 
-    public TimeDTO getTime() {
+    public TimeDto getTime() {
         return time;
     }
 
-    public void setTime(TimeDTO time) {
+    public void setTime(TimeDto time) {
         this.time = time;
     }
 
