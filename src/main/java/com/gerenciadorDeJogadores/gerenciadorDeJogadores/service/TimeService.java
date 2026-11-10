@@ -1,15 +1,16 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.service;
 
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeEntradaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeRespostaDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 
 import java.util.List;
 
 public interface TimeService {
-    TimeDto salvar(Time time);
+    TimeRespostaDto salvar(TimeEntradaDto timeEntradaDto);
 
-    List<TimeDto> buscarTodos();
+    List<TimeRespostaDto> buscarTodos();
 
     Time buscarPorId(Long id);
 }

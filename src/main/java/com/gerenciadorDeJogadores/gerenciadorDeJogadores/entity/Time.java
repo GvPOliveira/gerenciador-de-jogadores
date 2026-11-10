@@ -1,8 +1,6 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +12,6 @@ public class Time {
     @Id
     private Long id;
 
-    @NotBlank(message = "O nome do time é obrigatório.")
-    @Size(min = 2, message = "O nome do time deve ter no mínimo 2 caracteres.")
     @Column(nullable = false)
     private String nome;
 
@@ -25,6 +21,10 @@ public class Time {
 
     public Time() {
     }
+    public Time(String nome) {
+        this.nome = nome;
+    }
+
 
     public Long getId() {
         return id;

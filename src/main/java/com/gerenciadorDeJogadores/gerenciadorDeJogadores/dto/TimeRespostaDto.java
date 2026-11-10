@@ -1,14 +1,14 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto;
 
-public class TimeDto {
+public class TimeRespostaDto {
     private Long id;
 
     private String nome;
 
-    public TimeDto() {
+    public TimeRespostaDto() {
     }
 
-    public TimeDto(Long id, String nome) {
+    public TimeRespostaDto(Long id, String nome) {
         this.id = id;
         this.nome = nome;
     }

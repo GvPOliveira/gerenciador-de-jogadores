@@ -2,7 +2,7 @@ package com.gerenciadorDeJogadores.gerenciadorDeJogadores.service;
 
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorEntradaDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.JogadorRespostaDto;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeRespostaDto;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Jogador;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
 import com.gerenciadorDeJogadores.gerenciadorDeJogadores.exception.JogadorNotFound;
@@ -70,7 +70,7 @@ public class JogadorServiceJPA implements JogadorService {
 
     private JogadorRespostaDto toDto(Jogador jogador) {
         return new JogadorRespostaDto(jogador.getId(), jogador.getNome(), jogador.getNumeroCamisa(),
-                new TimeDto(jogador.getTime().getId(), jogador.getTime().getNome()),
+                new TimeRespostaDto(jogador.getTime().getId(), jogador.getTime().getNome()),
                 jogador.isLesionado(), jogador.getDescricao());
     }
 

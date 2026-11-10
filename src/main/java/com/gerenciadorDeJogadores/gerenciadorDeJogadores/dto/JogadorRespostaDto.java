@@ -9,7 +9,7 @@ public class JogadorRespostaDto {
 
     private Integer numeroCamisa;
 
-    private TimeDto time;
+    private TimeRespostaDto time;
 
     private boolean lesionado;
 
@@ -19,7 +19,7 @@ public class JogadorRespostaDto {
     public JogadorRespostaDto() {
     }
 
-    public JogadorRespostaDto(Long id, String nome, Integer numeroCamisa, TimeDto time, boolean lesionado, String descricao) {
+    public JogadorRespostaDto(Long id, String nome, Integer numeroCamisa, TimeRespostaDto time, boolean lesionado, String descricao) {
         this.id = id;
         this.nome = nome;
         this.numeroCamisa = numeroCamisa;
@@ -52,11 +52,11 @@ public class JogadorRespostaDto {
         this.numeroCamisa = numeroCamisa;
     }
 
-    public TimeDto getTime() {
+    public TimeRespostaDto getTime() {
         return time;
     }
 
-    public void setTime(TimeDto time) {
+    public void setTime(TimeRespostaDto time) {
         this.time = time;
     }
 

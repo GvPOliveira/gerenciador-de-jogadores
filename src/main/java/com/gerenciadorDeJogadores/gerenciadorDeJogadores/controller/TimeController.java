@@ -1,9 +1,9 @@
 package com.gerenciadorDeJogadores.gerenciadorDeJogadores.controller;
 
 
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeDto;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.entity.Time;
-import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.TimeServiceJPA;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeEntradaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.dto.TimeRespostaDto;
+import com.gerenciadorDeJogadores.gerenciadorDeJogadores.service.TimeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,29 +18,29 @@ import java.util.List;
 @RequestMapping("/times")
 public class TimeController {
 
-    private final TimeServiceJPA timeServiceJPA;
+    private final TimeService timeService;
 
 
-    public TimeController(TimeServiceJPA timeServiceJPA) {
-        this.timeServiceJPA = timeServiceJPA;
+    public TimeController(TimeService timeService) {
+        this.timeService = timeService;
     }
 
     @GetMapping
-    public List<TimeDto> buscarTodos() {
-        return timeServiceJPA.buscarTodos();
+    public List<TimeRespostaDto> buscarTodos() {
+        return timeService.buscarTodos();
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@Valid @RequestBody Time time) {
-        TimeDto timeDto = timeServiceJPA.salvar(time);
+    public ResponseEntity<?> salvar(@Valid @RequestBody TimeEntradaDto timeEntradaDto) {
+        TimeRespostaDto timeRespostaDto = timeService.salvar(timeEntradaDto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/times/{nome}").buildAndExpand(timeDto.getNome())
+                .path("/times/{id}").buildAndExpand(timeRespostaDto.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
-
-
     }
+
+
 
 
 }
