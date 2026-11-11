@@ -104,8 +104,14 @@ formTime.addEventListener("submit", async function (evt) {
             "Content-Type": "application/json"
         }
     })
+    const nomeTimeErro = document.getElementById("erroNomeTime");
+    nomeTimeErro.innerText = "";
+    if (response.status === 400) {
+        const erro = await response.json();
 
-    if (!response.ok) {
+        nomeTimeErro.innerText = erro.nome;
+        return;
+    } else if (!response.ok) {
         alert("Não foi possivel cadastrar o time, Status: " + response.status);
     } else {
         nome.value = "";
@@ -175,10 +181,21 @@ const formulario = document.getElementById("formAlterar");
 formulario.addEventListener("submit", async function (evt) {
     evt.preventDefault();
     const dados = new FormData(formulario);
+    let timeData, numeroCamisaData;
+    if (dados.get("time") === "") {
+        timeData = null;
+    } else {
+        timeData = Number(dados.get("time"));
+    }
+    if (dados.get("numeroCamisa") === "") {
+        numeroCamisaData = null;
+    } else {
+        numeroCamisaData = Number(dados.get("numeroCamisa"));
+    }
     const jogador = {
         nome: dados.get("nome"),
-        numeroCamisa: Number(dados.get("numeroCamisa")),
-        idTime: Number(dados.get("time")),
+        numeroCamisa: numeroCamisaData,
+        idTime: timeData,
         lesionado: dados.get("lesionado") === "true",
         descricao: dados.get("descricao")
     }
@@ -197,9 +214,11 @@ formulario.addEventListener("submit", async function (evt) {
         const erroNome = document.getElementById("erroNomeAlterar");
         const erroCamisa = document.getElementById("erroNumeroCamisaAlterar");
         const erroLesionado = document.getElementById("erroLesionadoAlterar");
+        const erroTime = document.getElementById("erroTimeAlterar");
         erroNome.innerText = "";
         erroCamisa.innerText = "";
         erroLesionado.innerText = "";
+        erroTime.innerText = "";
         for (const [chave, valor] of Object.entries(erros)) {
             if (chave === "nome") {
                 erroNome.innerText = valor;
@@ -207,6 +226,8 @@ formulario.addEventListener("submit", async function (evt) {
                 erroCamisa.innerText = valor;
             } else if (chave === "lesionado") {
                 erroLesionado.innerText = valor;
+            } else if (chave === "idTime") {
+                erroTime.innerText = valor;
             }
         }
     } else if (!response.ok) {

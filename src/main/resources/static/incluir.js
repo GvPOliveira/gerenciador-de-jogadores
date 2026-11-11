@@ -3,10 +3,21 @@ getTimes();
 formulario.addEventListener("submit", async function (evt) {
     evt.preventDefault();
     const dados = new FormData(formulario);
+    let timeData, numeroCamisaData;
+    if (dados.get("time") === "") {
+        timeData = null;
+    } else {
+        timeData = Number(dados.get("time"));
+    }
+    if (dados.get("numeroCamisa") === "") {
+        numeroCamisaData = null;
+    } else {
+        numeroCamisaData = Number(dados.get("numeroCamisa"));
+    }
     const jogador = {
         nome: dados.get("nome"),
-        numeroCamisa: Number(dados.get("numeroCamisa")),
-        idTime: Number(dados.get("time")),
+        numeroCamisa: numeroCamisaData,
+        idTime: timeData,
         lesionado: dados.get("lesionado") === "sim",
         descricao: dados.get("observacoes")
     }
@@ -25,9 +36,11 @@ formulario.addEventListener("submit", async function (evt) {
         const erroNome = document.getElementById("erroNome");
         const erroCamisa = document.getElementById("erroNumeroCamisa");
         const erroLesionado = document.getElementById("erroLesionado");
+        const erroTime = document.getElementById("erroTime");
         erroNome.innerText = "";
         erroCamisa.innerText = "";
         erroLesionado.innerText = "";
+        erroTime.innerText = "";
         for (const [chave, valor] of Object.entries(erros)) {
             if (chave === "nome") {
                 erroNome.innerText = valor;
@@ -35,6 +48,8 @@ formulario.addEventListener("submit", async function (evt) {
                 erroCamisa.innerText = valor;
             } else if (chave === "lesionado") {
                 erroLesionado.innerText = valor;
+            } else if (chave === "idTime") {
+                erroTime.innerText = valor;
             }
         }
 
