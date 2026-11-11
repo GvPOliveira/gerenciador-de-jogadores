@@ -9,16 +9,19 @@ public class TimeEntradaDto {
     @Size(min = 2, message = "O nome do time deve ter no mínimo 2 caracteres.")
     private String nome;
 
-    public TimeEntradaDto(){}
-
-    public TimeEntradaDto (String nome) {
-        this.nome = nome;
+    public TimeEntradaDto() {
     }
+
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.isBlank()) {
+            this.nome = nome;
+        } else {
+            this.nome = nome.trim();
+        }
     }
 }

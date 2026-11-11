@@ -30,7 +30,12 @@ public class JogadorEntradaDto {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.isBlank()) {
+            this.nome = nome;
+        } else {
+            this.nome = nome.trim();
+        }
+
     }
 
     public Integer getNumeroCamisa() {
