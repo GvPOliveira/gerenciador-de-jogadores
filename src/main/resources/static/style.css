@@ -285,19 +285,6 @@ button {
         font-size: 20px;
     }
 }
-/* Lesionado */
-   .lesionado {
-       display: inline-block;
-       background-color: #f5822a;
-       color: white;
-       border: 1px solid #a94b12;
-       padding: 4px 12px;
-       text-align: center;
-       font-size: 14px;
-       width: auto;
-       margin: 0 0 5px 0;
-   }
-
 /* Modal de cadastro de time */
 
 .modal {
@@ -523,21 +510,26 @@ button {
 }
 .nome-jogador {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: 8px 16px;
+    margin-bottom: 8px;
 }
 
 .nome-jogador h3 {
     margin: 0;
 }
 
-.lesionado {
+.nome-jogador .lesionado {
     display: inline-block;
     background-color: #f5822a;
     color: white;
     border: 1px solid #a94b12;
+    border-radius: 4px;
     padding: 4px 12px;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
     margin: 0;
 }
 .erro {
@@ -547,6 +539,11 @@ button {
     margin-top: 5px;
     font-weight: 500;
     min-height: 16px;
+}
+
+.campo > .erro {
+    grid-column: 2;
+    font-size: 14px;
 }
 
 
@@ -594,6 +591,10 @@ button {
 
     .rodape p {
         font-size: 14px;
+    }
+
+    .campo > .erro {
+        grid-column: auto;
     }
 
 }
