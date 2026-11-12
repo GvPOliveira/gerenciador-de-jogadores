@@ -58,6 +58,10 @@ body {
     margin-top: 5px;
 }
 
+.informacoes p span {
+    font-weight: normal;
+}
+
 .acoes {
     display: flex;
     flex-direction: column;

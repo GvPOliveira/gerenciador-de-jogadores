@@ -24,55 +24,65 @@ async function listar() {
         alert("Error, Status: " + response.status);
     } else {
         const listaJogadores = document.getElementById("listaJogadores");
-        listaJogadores.textContent = "";
+        listaJogadores.innerText = "";
         const jogadores = await response.json();
-        for (const j of jogadores) {
-            const divJogador = document.createElement("div");
-            divJogador.classList.add("jogador");
-            const divInfo = document.createElement("div");
-            divInfo.classList.add("informacoes");
-            divJogador.append(divInfo);
-            const pCamisa = document.createElement("p");
-            const pTime = document.createElement("p");
-            const divNome = document.createElement("div");
-            divNome.classList.add("nome-jogador");
+        if (jogadores.length > 0) {
+            for (const j of jogadores) {
+                const divJogador = document.createElement("div");
+                divJogador.classList.add("jogador");
+                const divInfo = document.createElement("div");
+                divInfo.classList.add("informacoes");
+                divJogador.append(divInfo);
+                const pCamisa = document.createElement("p");
+                const pTime = document.createElement("p");
+                const divNome = document.createElement("div");
+                divNome.classList.add("nome-jogador");
 
-            const nome = document.createElement("h3");
-            nome.textContent = j.nome;
+                const nome = document.createElement("h3");
+                nome.textContent = j.nome;
 
-            divNome.append(nome);
+                divNome.append(nome);
 
-            if (j.lesionado === true) {
-                const lesionado = document.createElement("p");
-                lesionado.textContent = "LESIONADO";
-                lesionado.classList.add("lesionado");
+                if (j.lesionado === true) {
+                    const lesionado = document.createElement("p");
+                    lesionado.textContent = "LESIONADO";
+                    lesionado.classList.add("lesionado");
 
-                divNome.append(lesionado);
+                    divNome.append(lesionado);
+                }
+                divInfo.append(divNome);
+                const valorCamisa = document.createElement("span");
+                valorCamisa.textContent = j.numeroCamisa;
+                pCamisa.textContent = "Camisa: ";
+                pCamisa.append(valorCamisa);
+                divInfo.append(pCamisa);
+                const valorTime = document.createElement("span");
+                valorTime.textContent = j.time.nome;
+                pTime.textContent = "Time: ";
+                pTime.append(valorTime);
+                divInfo.append(pTime);
+
+                const divAcoes = document.createElement("div");
+                divAcoes.classList.add("acoes");
+                divJogador.append(divAcoes);
+                const btnAlterar = document.createElement("button");
+                btnAlterar.textContent = "Alterar";
+                btnAlterar.dataset.id = j.id;
+                btnAlterar.classList.add("btn-alterar");
+                // implementação para chamar a função correspondente ao botão clicado
+                // passando o id dentro do data-set no botão.
+                btnAlterar.addEventListener("click", alterarJogador);
+                divAcoes.append(btnAlterar);
+                const btnExcluir = document.createElement("button");
+                btnExcluir.textContent = "Excluir";
+                btnExcluir.dataset.id = j.id;
+                btnExcluir.addEventListener("click", deleteJogador);
+                btnExcluir.classList.add("btn-excluir");
+                divAcoes.append(btnExcluir);
+                listaJogadores.append(divJogador);
             }
-            divInfo.append(divNome);
-            pCamisa.textContent = j.numeroCamisa;
-            divInfo.append(pCamisa);
-            pTime.textContent = j.time.nome;
-            divInfo.append(pTime);
-
-            const divAcoes = document.createElement("div");
-            divAcoes.classList.add("acoes");
-            divJogador.append(divAcoes);
-            const btnAlterar = document.createElement("button");
-            btnAlterar.textContent = "Alterar";
-            btnAlterar.dataset.id = j.id;
-            btnAlterar.classList.add("btn-alterar");
-            // implementação para chamar a função correspondente ao botão clicado
-            // passando o id dentro do data-set no botão.
-            btnAlterar.addEventListener("click", alterarJogador);
-            divAcoes.append(btnAlterar);
-            const btnExcluir = document.createElement("button");
-            btnExcluir.textContent = "Excluir";
-            btnExcluir.dataset.id = j.id;
-            btnExcluir.addEventListener("click", deleteJogador);
-            btnExcluir.classList.add("btn-excluir");
-            divAcoes.append(btnExcluir);
-            listaJogadores.append(divJogador);
+        } else {
+            listaJogadores.innerText = "Nenhum jogador cadastrado.";
         }
     }
 }
@@ -249,16 +259,16 @@ formulario.addEventListener("submit", async function (evt) {
 async function deleteJogador() {
     const idJogador = this.dataset.id;
 
-    const confirm = window.confirm("Você deseja realmente excluir esse jogador?")
+    const confirmado = window.confirm("Você realmente deseja excluir o jogador ID " + idJogador + "?");
 
-    if (confirm) {
+    if (confirmado) {
         const response = await fetch(`/jogadores/${idJogador}`, {
             method: "DELETE"
         });
         if (!response.ok) {
-            alert("Não foi possivel excluir o jogador, Status: " + response.status);
+            alert("Não foi possível excluir o jogador, Status: " + response.status);
         } else {
-            alert("Jogador excluido com sucesso!");
+            alert("Jogador excluído com sucesso!");
             window.location.href = "index.html";
         }
     }
