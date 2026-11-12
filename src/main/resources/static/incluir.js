@@ -77,6 +77,8 @@ async function getTimes() {
                 opt.textContent = time.nome;
                 timesList.append(opt);
             }
+        } else {
+            alert("Nenhum time cadastrado, cadastre um time na tela inicial.")
         }
     }
 }
