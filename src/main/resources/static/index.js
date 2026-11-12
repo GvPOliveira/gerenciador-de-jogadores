@@ -1,6 +1,16 @@
 listar();
 const btnIncluir = document.getElementById("incluir");
+const erroNome = document.getElementById("erroNomeAlterar");
+const erroCamisa = document.getElementById("erroNumeroCamisaAlterar");
+const erroLesionado = document.getElementById("erroLesionadoAlterar");
+const erroTime = document.getElementById("erroTimeAlterar");
+const modalFechar = document.getElementById("fecharModalAlterar");
+const modalAlterar = document.getElementById("modalAlterar");
 btnIncluir.addEventListener("click", redirecionar);
+
+modalFechar.addEventListener("click", function () {
+    modalAlterar.style.display = "none";
+})
 
 function redirecionar() {
     window.location.href = 'incluir.html';
@@ -112,7 +122,7 @@ formTime.addEventListener("submit", async function (evt) {
         nomeTimeErro.innerText = erro.nome;
         return;
     } else if (!response.ok) {
-        alert("Não foi possivel cadastrar o time, Status: " + response.status);
+        alert("Não foi possível cadastrar o time, Status: " + response.status);
     } else {
         nome.value = "";
         alert("Time cadastrado com sucesso!")
@@ -127,8 +137,6 @@ formTime.addEventListener("submit", async function (evt) {
 let jogadorAlterado;
 
 async function alterarJogador() {
-    const modalAlterar = document.getElementById("modalAlterar");
-    const modalFechar = document.getElementById("fecharModalAlterar");
     modalAlterar.style.display = "flex";
     const nomeAlterar = document.getElementById("nomeAlterar");
     const numeroCamisa = document.getElementById("numeroCamisaAlterar");
@@ -139,6 +147,11 @@ async function alterarJogador() {
     jogadorAlterado = idJogador;
     const tituloAlterar = document.getElementById("tituloAlterar");
     tituloAlterar.innerText = "Alterar jogador - ID: " + idJogador;
+
+    erroNome.innerText = "";
+    erroCamisa.innerText = "";
+    erroLesionado.innerText = "";
+    erroTime.innerText = "";
 
     const responseGetJogador = await fetch(`/jogadores/${idJogador}`);
     if (!responseGetJogador.ok) {
@@ -153,6 +166,7 @@ async function alterarJogador() {
             alert("Erro ao encontrar os times, Status: " + responseGetTimes.status)
         } else {
             const times = await responseGetTimes.json();
+            timesList.innerHTML = "<option value=\"\">Selecione</option>";
             for (const time of times) {
                 const opt = document.createElement("option");
                 opt.value = time.id;
@@ -169,11 +183,8 @@ async function alterarJogador() {
             }
         });
 
-        descricao.innerText = jogadorRetornado.descricao;
+        descricao.value = jogadorRetornado.descricao;
     }
-    modalFechar.addEventListener("click", function () {
-        modalAlterar.style.display = "none";
-    })
 }
 
 // Função de salvar jogador alterado.
@@ -211,10 +222,6 @@ formulario.addEventListener("submit", async function (evt) {
     );
     if (response.status === 400) {
         const erros = await response.json();
-        const erroNome = document.getElementById("erroNomeAlterar");
-        const erroCamisa = document.getElementById("erroNumeroCamisaAlterar");
-        const erroLesionado = document.getElementById("erroLesionadoAlterar");
-        const erroTime = document.getElementById("erroTimeAlterar");
         erroNome.innerText = "";
         erroCamisa.innerText = "";
         erroLesionado.innerText = "";
@@ -231,7 +238,7 @@ formulario.addEventListener("submit", async function (evt) {
             }
         }
     } else if (!response.ok) {
-        alert("Não foi possivel cadastrar esse jogador, Status: " + response.status);
+        alert("Erro ao alterar o jogador, Status: " + response.status);
     } else {
         alert("Jogador alterado com sucesso!");
         window.location.href = "index.html";
