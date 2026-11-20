@@ -6,6 +6,9 @@ const erroLesionado = document.getElementById("erroLesionadoAlterar");
 const erroTime = document.getElementById("erroTimeAlterar");
 const modalFechar = document.getElementById("fecharModalAlterar");
 const modalAlterar = document.getElementById("modalAlterar");
+const erroNomeTime = document.getElementById("erroNomeTime");
+const nomeTime = document.getElementById("nomeTime");
+
 btnIncluir.addEventListener("click", redirecionar);
 
 modalFechar.addEventListener("click", function () {
@@ -95,12 +98,15 @@ const btnCancelarModal = document.getElementById("cancelarModal");
 
 btnCadastrarTime.addEventListener("click", function () {
     modalTime.style.display = "flex";
+    erroNomeTime.innerText = "";
 });
 
 btnFecharModal.addEventListener("click", fecharModal);
 btnCancelarModal.addEventListener("click", fecharModal);
 
 function fecharModal() {
+    erroNomeTime.innerText = "";
+    nomeTime.value = "";
     modalTime.style.display = "none";
 }
 
@@ -111,10 +117,8 @@ const formTime = document.getElementById("formTime");
 formTime.addEventListener("submit", async function (evt) {
     evt.preventDefault();
 
-    const nome = document.getElementById("nomeTime");
-
     const time = {
-        nome: nome.value
+        nome: nomeTime.value
     }
 
     const response = await fetch("/times", {
@@ -124,17 +128,14 @@ formTime.addEventListener("submit", async function (evt) {
             "Content-Type": "application/json"
         }
     })
-    const nomeTimeErro = document.getElementById("erroNomeTime");
-    nomeTimeErro.innerText = "";
+    erroNomeTime.innerText = "";
     if (response.status === 400) {
         const erro = await response.json();
-
-        nomeTimeErro.innerText = erro.nome;
+        erroNomeTime.innerText = erro.nome;
         return;
     } else if (!response.ok) {
         alert("Não foi possível cadastrar o time, Status: " + response.status);
     } else {
-        nome.value = "";
         alert("Time cadastrado com sucesso!")
         fecharModal();
         window.location.href = "index.html";
